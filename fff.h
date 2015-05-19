@@ -1,28 +1,4 @@
-/*
-LICENSE
-
-The MIT License (MIT)
-
-Copyright (c) 2010 Michael Long
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-*/#ifndef FAKE_FUNCTIONS
+#ifndef FAKE_FUNCTIONS
 #define FAKE_FUNCTIONS
 
 #define FFF_MAX_ARGS (20u)
@@ -5077,9 +5053,11 @@ END_EXTERN_C \
     DEFINE_FAKE_VALUE_FUNC20_VARARG(RETURN_TYPE, FUNCNAME, ARG0_TYPE, ARG1_TYPE, ARG2_TYPE, ARG3_TYPE, ARG4_TYPE, ARG5_TYPE, ARG6_TYPE, ARG7_TYPE, ARG8_TYPE, ARG9_TYPE, ARG10_TYPE, ARG11_TYPE, ARG12_TYPE, ARG13_TYPE, ARG14_TYPE, ARG15_TYPE, ARG16_TYPE, ARG17_TYPE, ARG18_TYPE, ...) \
     
 
+#define EXPAND( x ) x
+  
 #define PP_NARG_MINUS2(...)     PP_NARG_MINUS2_(__VA_ARGS__, PP_RSEQ_N_MINUS2())
 
-#define PP_NARG_MINUS2_(...)     PP_ARG_MINUS2_N(__VA_ARGS__)
+#define PP_NARG_MINUS2_(...)     EXPAND( PP_ARG_MINUS2_N(__VA_ARGS__) )
 
 #define PP_ARG_MINUS2_N(returnVal, _0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, N, ...)   N
 
@@ -5090,13 +5068,13 @@ END_EXTERN_C \
 
 #define FUNC_VALUE_(N,...)     FUNC_VALUE_N(N,__VA_ARGS__)
 
-#define FUNC_VALUE_N(N,...)     FAKE_VALUE_FUNC ## N(__VA_ARGS__)
+#define FUNC_VALUE_N(N,...)     EXPAND( FAKE_VALUE_FUNC ## N(__VA_ARGS__) )
 
 
 
 #define PP_NARG_MINUS1(...)     PP_NARG_MINUS1_(__VA_ARGS__, PP_RSEQ_N_MINUS1())
 
-#define PP_NARG_MINUS1_(...)     PP_ARG_MINUS1_N(__VA_ARGS__)
+#define PP_NARG_MINUS1_(...)     EXPAND( PP_ARG_MINUS1_N(__VA_ARGS__) )
 
 #define PP_ARG_MINUS1_N(_0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, N, ...)   N
 
@@ -5106,7 +5084,7 @@ END_EXTERN_C \
 
 #define FUNC_VOID_(N,...)     FUNC_VOID_N(N,__VA_ARGS__)
 
-#define FUNC_VOID_N(N,...)     FAKE_VOID_FUNC ## N(__VA_ARGS__)
+#define FUNC_VOID_N(N,...)     EXPAND( FAKE_VOID_FUNC ## N(__VA_ARGS__) )
 
 
 #endif // FAKE_FUNCTIONS

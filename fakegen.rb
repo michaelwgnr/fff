@@ -351,11 +351,13 @@ end
 def output_macro_counting_shortcuts
   putd <<-MACRO_COUNTING
 
+#define EXPAND( x ) x
+  
 #define PP_NARG_MINUS2(...) \
     PP_NARG_MINUS2_(__VA_ARGS__, PP_RSEQ_N_MINUS2())
 
 #define PP_NARG_MINUS2_(...) \
-    PP_ARG_MINUS2_N(__VA_ARGS__)
+    EXPAND( PP_ARG_MINUS2_N(__VA_ARGS__) )
 
 #define PP_ARG_MINUS2_N(returnVal, _0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, N, ...)   N
 
@@ -370,7 +372,7 @@ def output_macro_counting_shortcuts
     FUNC_VALUE_N(N,__VA_ARGS__)
 
 #define FUNC_VALUE_N(N,...) \
-    FAKE_VALUE_FUNC ## N(__VA_ARGS__)
+    EXPAND( FAKE_VALUE_FUNC ## N(__VA_ARGS__) )
 
 
 
@@ -378,7 +380,7 @@ def output_macro_counting_shortcuts
     PP_NARG_MINUS1_(__VA_ARGS__, PP_RSEQ_N_MINUS1())
 
 #define PP_NARG_MINUS1_(...) \
-    PP_ARG_MINUS1_N(__VA_ARGS__)
+    EXPAND( PP_ARG_MINUS1_N(__VA_ARGS__) )
 
 #define PP_ARG_MINUS1_N(_0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, N, ...)   N
 
@@ -392,7 +394,7 @@ def output_macro_counting_shortcuts
     FUNC_VOID_N(N,__VA_ARGS__)
 
 #define FUNC_VOID_N(N,...) \
-    FAKE_VOID_FUNC ## N(__VA_ARGS__)
+    EXPAND( FAKE_VOID_FUNC ## N(__VA_ARGS__) )
 
   MACRO_COUNTING
 end
